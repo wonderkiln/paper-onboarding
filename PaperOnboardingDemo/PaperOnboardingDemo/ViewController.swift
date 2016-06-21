@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  @IBOutlet weak var onboarding: PaperOnboarding!
   @IBOutlet weak var skipButton: UIButton!
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -21,24 +20,26 @@ class ViewController: UIViewController {
     
     skipButton.hidden = true
     
+    
+    
     // EXAMPLE USE FROM CODE
     
-//    let onboarding = PaperOnboarding(itemsCount: 3)
-//    onboarding.dataSource = self
-//    onboarding.translatesAutoresizingMaskIntoConstraints = false
-//    view.addSubview(onboarding)
+    let onboarding = PaperOnboarding(itemCount: 3, pageItemRadius: 8, selectedRadius: 12, pageSelectedBorderColor: UIColor.greenColor())
+    onboarding.dataSource = self
+    onboarding.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(onboarding)
 //    
 //    // add constraints
-//    for attribute: NSLayoutAttribute in [.Left, .Right, .Top, .Bottom] {
-//      let constraint = NSLayoutConstraint(item: onboarding,
-//                                          attribute: attribute,
-//                                          relatedBy: .Equal,
-//                                          toItem: view,
-//                                          attribute: attribute,
-//                                          multiplier: 1,
-//                                          constant: 0)
-//      view.addConstraint(constraint)
-//    }
+    for attribute: NSLayoutAttribute in [.Left, .Right, .Top, .Bottom] {
+      let constraint = NSLayoutConstraint(item: onboarding,
+                                          attribute: attribute,
+                                          relatedBy: .Equal,
+                                          toItem: view,
+                                          attribute: attribute,
+                                          multiplier: 1,
+                                          constant: 0)
+      view.addConstraint(constraint)
+    }
   }
 
   override func didReceiveMemoryWarning() {
@@ -84,9 +85,9 @@ extension ViewController: PaperOnboardingDataSource {
     let titleFont = UIFont(name: "Nunito-Bold", size: 36.0) ?? UIFont.boldSystemFontOfSize(36.0)
     let descriptionFont = UIFont(name: "OpenSans-Regular", size: 14.0) ?? UIFont.systemFontOfSize(14.0)
     return [
-      (UIImage.Asset.Hotels.rawValue, "Hotels", "All hotels and hostels are sorted by hospitality rating", UIImage.Asset.Key.rawValue, UIColor(red:0.40, green:0.56, blue:0.71, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont),
-      (UIImage.Asset.Banks.rawValue, "Banks", "We carefully verify all banks before add them into the app", UIImage.Asset.Wallet.rawValue, UIColor(red:0.40, green:0.69, blue:0.71, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont),
-      (UIImage.Asset.Stores.rawValue, "Stores", "All local stores are categorized for your convenience", UIImage.Asset.Shopping_Cart.rawValue, UIColor(red:0.61, green:0.56, blue:0.74, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont)
+      (UIImage.Asset.Hotels.rawValue, "Hotels", "All hotels and hostels are sorted by hospitality rating", "", UIColor(red:0.40, green:0.56, blue:0.71, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont),
+      (UIImage.Asset.Banks.rawValue, "Banks", "We carefully verify all banks before add them into the app", "", UIColor(red:0.40, green:0.69, blue:0.71, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont),
+      (UIImage.Asset.Stores.rawValue, "Stores", "All local stores are categorized for your convenience", "", UIColor(red:0.61, green:0.56, blue:0.74, alpha:1.00), UIColor.whiteColor(), UIColor.whiteColor(), titleFont,descriptionFont)
     ][index]
   }
   

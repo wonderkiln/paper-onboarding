@@ -81,9 +81,11 @@ public class PaperOnboarding: UIView {
   
   private var itemsInfo: [OnboardingItemInfo]?
   
-  private var pageViewBottomConstant: CGFloat = 32
-  private var pageViewSelectedRadius: CGFloat = 22
-  private var pageViewRadius: CGFloat         = 8
+  var pageViewBottomConstant: CGFloat = 32
+  var pageViewSelectedRadius: CGFloat = 22
+  var pageViewRadius: CGFloat         = 8
+  var pageBorderColor:UIColor     = .whiteColor()
+  var pageSelectedBorderColor:UIColor = .whiteColor()
   
   private var fillAnimationView: FillAnimationView?
   private var pageView: PageView?
@@ -101,6 +103,15 @@ public class PaperOnboarding: UIView {
     super.init(frame: CGRect.zero)
     self.itemsCount = itemsCount
   }
+    
+    public init(itemCount: Int = 3, pageItemRadius:CGFloat, selectedRadius:CGFloat, pageBorderColor:UIColor = .whiteColor(), pageSelectedBorderColor:UIColor = .whiteColor()) {
+        super.init(frame: CGRect.zero)
+        self.pageViewRadius = pageItemRadius
+        self.pageViewSelectedRadius = selectedRadius
+        self.pageBorderColor = pageBorderColor
+        self.pageSelectedBorderColor = pageSelectedBorderColor
+        self.itemsCount = itemCount
+    }
   
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -164,7 +175,10 @@ extension PaperOnboarding {
                                            itemsCount: itemsCount,
                                            bottomConstant: pageViewBottomConstant * -1,
                                            radius:pageViewRadius,
-                                           selectedRadius: pageViewSelectedRadius)
+                                           selectedRadius: pageViewSelectedRadius,
+                                           borderColor: self.pageBorderColor,
+                                           selectedBorderColor:  self.pageSelectedBorderColor
+                                           )
     pageView.configuration = { item, index in
       if let iconName = self.itemsInfo?[index].iconName {
         item.imageView?.image = UIImage(named: iconName)

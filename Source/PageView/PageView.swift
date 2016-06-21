@@ -10,11 +10,14 @@ import UIKit
 
 class PageView: UIView {
   
-  var itemsCount                  = 3
-  var itemRadius: CGFloat         = 8.0
-  var selectedItemRadius: CGFloat = 22.0
-  var duration: Double            = 0.7
-  var space: CGFloat              = 20// space between items
+  private var itemsCount                  = 0
+  private var itemRadius: CGFloat         = 0
+  private var selectedItemRadius: CGFloat = 0
+  private var duration: Double            = 0.7
+  private var space: CGFloat              = 10// space between items
+    
+  var borderColor: UIColor = UIColor.whiteColor()
+  var selectedBorderColor:UIColor = UIColor.whiteColor()
 
   // configure items set image or chage color for border view
   var configuration: ((item: PageViewItem, index: Int) -> Void)? {
@@ -31,10 +34,12 @@ class PageView: UIView {
     commonInit()
   }
   
-  init(frame: CGRect, itemsCount: Int, radius: CGFloat, selectedRadius: CGFloat) {
+    init(frame: CGRect, itemsCount: Int, radius: CGFloat, selectedRadius: CGFloat, borderColor:UIColor, selectedBorderColor:UIColor) {
     self.itemsCount         = itemsCount
     self.itemRadius         = radius
     self.selectedItemRadius = selectedRadius
+    self.borderColor = borderColor
+    self.selectedBorderColor = selectedBorderColor
     super.init(frame: frame)
     commonInit()
   }
@@ -49,8 +54,8 @@ class PageView: UIView {
 
 extension PageView {
   
-  class func pageViewOnView(view: UIView, itemsCount: Int, bottomConstant: CGFloat, radius: CGFloat, selectedRadius: CGFloat) -> PageView {
-   let pageView = Init(PageView(frame: CGRect.zero, itemsCount: itemsCount, radius: radius, selectedRadius: selectedRadius)) {
+    class func pageViewOnView(view: UIView, itemsCount: Int, bottomConstant: CGFloat, radius: CGFloat, selectedRadius: CGFloat, borderColor:UIColor, selectedBorderColor:UIColor) -> PageView {
+    let pageView = Init(PageView(frame: CGRect.zero, itemsCount: itemsCount, radius: radius, selectedRadius: selectedRadius, borderColor: borderColor, selectedBorderColor: selectedBorderColor)) {
       $0.translatesAutoresizingMaskIntoConstraints = false
       $0.alpha                                     = 0.4
     }
@@ -107,7 +112,7 @@ extension PageView {
 extension PageView {
   
   private func createContainerView() -> PageContrainer {
-    let container = Init(PageContrainer(radius: itemRadius, selectedRadius: selectedItemRadius, space: space, itemsCount: itemsCount)) {
+    let container = Init(PageContrainer(radius: itemRadius, selectedRadius: selectedItemRadius, space: space, itemsCount: itemsCount, borderColor:self.borderColor, selectedBorderColor:self.selectedBorderColor)) {
       $0.backgroundColor                           = .clearColor()
       $0.translatesAutoresizingMaskIntoConstraints = false
     }

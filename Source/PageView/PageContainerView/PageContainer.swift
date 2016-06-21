@@ -16,14 +16,19 @@ class PageContrainer: UIView {
   
   private let itemRadius: CGFloat
   private let selectedItemRadius: CGFloat
+  private let borderColor: UIColor
+  private let selectedBorderColor:UIColor
   private let itemsCount: Int
   private let animationKey = "animationKey"
   
-  init(radius: CGFloat, selectedRadius: CGFloat, space: CGFloat, itemsCount: Int) {
+    init(radius: CGFloat, selectedRadius: CGFloat, space: CGFloat, itemsCount: Int, borderColor:UIColor, selectedBorderColor:UIColor) {
+    
     self.itemsCount         = itemsCount
     self.space              = space
     self.itemRadius         = radius
     self.selectedItemRadius = selectedRadius
+    self.borderColor = borderColor
+    self.selectedBorderColor = selectedBorderColor
     super.init(frame: CGRect.zero)
     items = createItems(itemsCount, radius: radius, selectedRadius: selectedRadius)
   }
@@ -65,7 +70,6 @@ extension PageContrainer {
     UIView.animateWithDuration(duration, delay: 0, options: .CurveEaseOut, animations: {
       self.layoutIfNeeded()
     }, completion: nil)
-    
     item.animationSelected(selected, duration: duration, fillColor: fillColor)
   }
 }
@@ -90,9 +94,12 @@ extension PageContrainer {
   }
   
   private func createItem(radius: CGFloat, selectedRadius: CGFloat, isSelect: Bool = false) -> PageViewItem {
-    let item = Init(PageViewItem(radius: radius, selectedRadius: selectedRadius, isSelect: isSelect)) {
+    let item = Init(PageViewItem(radius: radius, selectedRadius: selectedRadius, isSelect: isSelect, borderColor:self.borderColor, selectedBorderColor:self.selectedBorderColor)) {
       $0.translatesAutoresizingMaskIntoConstraints = false
       $0.backgroundColor                           = .clearColor()
+    }
+    if isSelect {
+        item.animationSelected(isSelect, duration: 0.1, fillColor: false)
     }
     self.addSubview(item)
     

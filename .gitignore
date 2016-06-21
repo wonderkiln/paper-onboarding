@@ -61,3 +61,9 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/screenshots
+
+PaperOnboardingDemo/PaperOnboardingDemo/Base.lproj/Main.storyboard
+
+PaperOnboardingDemo/PaperOnboardingDemo/Base.lproj/Main.storyboard
+
+*.storyboard

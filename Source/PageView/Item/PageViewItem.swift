@@ -14,6 +14,7 @@ class PageViewItem: UIView {
   let selectedCircleRadius: CGFloat
   let lineWidth: CGFloat
   let borderColor: UIColor
+  let selectedBorderColor:UIColor
   
   var select: Bool
   
@@ -22,8 +23,9 @@ class PageViewItem: UIView {
   var circleLayer: CAShapeLayer?
   var tickIndex: Int = 0
   
-  init(radius: CGFloat, selectedRadius: CGFloat, borderColor: UIColor = .whiteColor(), lineWidth: CGFloat = 3, isSelect: Bool = false) {
+    init(radius: CGFloat, selectedRadius: CGFloat, borderColor: UIColor = .whiteColor(), selectedBorderColor:UIColor = .redColor(), lineWidth: CGFloat = 4, isSelect: Bool = false) {
     self.borderColor = borderColor
+    self.selectedBorderColor = selectedBorderColor
     self.lineWidth = lineWidth
     self.circleRadius = radius
     self.selectedCircleRadius = selectedRadius
@@ -47,11 +49,14 @@ extension PageViewItem {
     
     let currentRadius  = selected == true ? selectedCircleRadius : circleRadius
     let scaleAnimation = circleScaleAnimation(currentRadius - lineWidth / 2.0, duration: duration)
+    let toBorderColor = selected == true ? selectedBorderColor : borderColor
+    let colorBorderAnimation = circleColorAnimation(toBorderColor, duration: duration)
     let toColor        = fillColor == true ? UIColor.whiteColor() : UIColor.clearColor()
     let colorAnimation = circleBackgroundAnimation(toColor, duration: duration)
     
     circleLayer?.addAnimation(scaleAnimation, forKey: nil)
     circleLayer?.addAnimation(colorAnimation, forKey: nil)
+    circleLayer?.addAnimation(colorBorderAnimation, forKey: nil)
   }
 }
 
@@ -96,7 +101,7 @@ extension PageViewItem {
     let layer = Init(CAShapeLayer()) {
       $0.path        = path.CGPath
       $0.lineWidth   = lineWidth
-      $0.strokeColor = UIColor.whiteColor().CGColor
+      $0.strokeColor = self.borderColor.CGColor
       $0.fillColor   = UIColor.clearColor().CGColor
     }
     return layer
@@ -132,6 +137,17 @@ extension PageViewItem {
     }
     return animation
   }
+    
+    private func circleColorAnimation(toColor: UIColor, duration: Double) -> CABasicAnimation {
+        
+        let animation = Init(CABasicAnimation(keyPath: "strokeColor")) {
+            $0.duration            = duration
+            $0.toValue             = toColor.CGColor
+            $0.removedOnCompletion = false
+            $0.fillMode            = kCAFillModeForwards
+        }
+        return animation
+    }
 
   private func circleBackgroundAnimation(toColor: UIColor, duration: Double) -> CABasicAnimation {
     let animation = Init(CABasicAnimation(keyPath: "fillColor")) {
