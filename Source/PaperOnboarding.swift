@@ -73,7 +73,7 @@ public class PaperOnboarding: UIView {
   }
   
   /// The object that acts as the delegate of the PaperOnboarding. PaperOnboardingDelegate protocol
-  @IBOutlet public var delegate: AnyObject?
+  @IBOutlet public weak var delegate: AnyObject?
   
   /// current index item
   public private(set) var currentIndex: Int = 0

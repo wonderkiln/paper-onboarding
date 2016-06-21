@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol OnboardingContentViewDelegate {
+protocol OnboardingContentViewDelegate:class {
 
   func onboardingItemAtIndex(index: Int) -> OnboardingItemInfo?
   func onboardingConfigurationItem(item: OnboardingContentViewItem, index: Int)
@@ -23,7 +23,7 @@ class OnboardingContentView: UIView {
   }
 
   private var currentItem: OnboardingContentViewItem?
-  var delegate: OnboardingContentViewDelegate
+  weak var delegate: OnboardingContentViewDelegate?
 
   init(itemsCount: Int, delegate: OnboardingContentViewDelegate) {
     self.delegate = delegate
@@ -85,7 +85,7 @@ extension OnboardingContentView {
 
   private func createItem(index: Int) -> OnboardingContentViewItem {
 
-    guard let info = delegate.onboardingItemAtIndex(index) else {
+    guard let info = delegate?.onboardingItemAtIndex(index) else {
       return OnboardingContentViewItem.itemOnView(self)
     }
 
@@ -99,7 +99,7 @@ extension OnboardingContentView {
       $0.descriptionLabel?.textColor = info.descriptionColor
     }
     
-    delegate.onboardingConfigurationItem(item, index: index)
+    delegate?.onboardingConfigurationItem(item, index: index)
     return item
   }
 }

@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol GestureControlDelegate {
+protocol GestureControlDelegate:class {
   func gestureControlDidSwipe(direction: UISwipeGestureRecognizerDirection)
 }
 
 class GestureControl: UIView {
   
-  let delegate: GestureControlDelegate
+  weak var delegate: GestureControlDelegate?
   
   init(view: UIView, delegate: GestureControlDelegate) {
     self.delegate = delegate
@@ -51,7 +51,7 @@ class GestureControl: UIView {
 extension GestureControl {
   
   dynamic func swipeHandler(gesture: UISwipeGestureRecognizer) {
-    delegate.gestureControlDidSwipe(gesture.direction)
+    delegate?.gestureControlDidSwipe(gesture.direction)
   }
 
 }
