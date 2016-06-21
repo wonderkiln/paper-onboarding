@@ -57,7 +57,7 @@ extension PageView {
     class func pageViewOnView(view: UIView, itemsCount: Int, bottomConstant: CGFloat, radius: CGFloat, selectedRadius: CGFloat, borderColor:UIColor, selectedBorderColor:UIColor) -> PageView {
     let pageView = Init(PageView(frame: CGRect.zero, itemsCount: itemsCount, radius: radius, selectedRadius: selectedRadius, borderColor: borderColor, selectedBorderColor: selectedBorderColor)) {
       $0.translatesAutoresizingMaskIntoConstraints = false
-      $0.alpha                                     = 0.4
+      $0.alpha                                     = 1
     }
     view.addSubview(pageView)
     
