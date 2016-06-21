@@ -66,7 +66,7 @@ public protocol PaperOnboardingDelegate {
 public class PaperOnboarding: UIView {
   
   ///  The object that acts as the data source of the  PaperOnboardingDataSource.
-  @IBOutlet public var dataSource: AnyObject? {
+  @IBOutlet public weak var dataSource: AnyObject? {
     didSet {
       commonInit()
     }
