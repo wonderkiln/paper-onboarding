@@ -75,7 +75,7 @@ extension FillAnimationView {
       $0.toValue             = path.CGPath
       $0.removedOnCompletion = false
       $0.fillMode            = kCAFillModeForwards
-      $0.delegate            = self
+      //$0.delegate            = self
       $0.timingFunction      = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
     }
     return animation
@@ -83,7 +83,7 @@ extension FillAnimationView {
   
   // animation delegate
   
-  override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    func animationDidStop(anim: CAAnimation, finished flag: Bool) {
     
     guard let circleLayer = anim.valueForKey(Constant.circle) as? CAShapeLayer else {
       return
